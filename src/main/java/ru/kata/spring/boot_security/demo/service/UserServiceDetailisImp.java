@@ -7,14 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImp;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,6 +73,11 @@ public class UserServiceDetailisImp implements UserServiceDetailis {
 
             updateUser.setPassword(user.getPassword());
         }
+
+        if (updateUser.getRoles() == null || updateUser.getRoles().isEmpty()) {
+            updateUser.setRoles(user.getRoles());
+        }
+
         userRepository.save(updateUser);
     }
 
